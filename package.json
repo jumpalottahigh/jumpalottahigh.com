@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "publish-drafts": "node -e \"const {createClient}=require('next-sanity');require('fs').readFileSync('.env.local','utf8').split('\\n').forEach(l=>{const[k,...v]=l.split('=');if(k&&v.length)process.env[k.trim()]=v.join('=').trim()});const c=createClient({projectId:process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,dataset:'production',apiVersion:'2024-01-01',token:process.env.SANITY_API_TOKEN,useCdn:false});c.fetch('*[_id in path(\\\"drafts.**\\\")]').then(ds=>{if(!ds.length)return console.log('No drafts.');const tx=c.transaction();ds.forEach(d=>{tx.createOrReplace({...d,_id:d._id.replace('drafts.','')});tx.delete(d._id)});return tx.commit()}).then(r=>r&&console.log('Published',r.results.length/2,'document(s)!')).catch(console.error)\""
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",
