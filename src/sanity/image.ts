@@ -1,11 +1,11 @@
-import { createImageUrlBuilder } from "@sanity/image-url";
-import { client } from "./client";
+import { createImageUrlBuilder } from '@sanity/image-url'
+import { client } from './client'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type SanityImageSource = any;
+type SanityImageSource = any
 
-const builder = createImageUrlBuilder(client);
+const builder = createImageUrlBuilder(client)
 
 export function urlFor(source: SanityImageSource) {
-  return builder.image(source);
+  return builder.image(source)
 }
